@@ -1,0 +1,34 @@
+/* ============================================================
+   GLOBAL SPACE BACKGROUND — Fixed Deep Space Backdrop
+   ============================================================ */
+
+.global-space-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.global-space-bg__canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Depth vignette — darkens edges, keeps center bright */
+.global-space-bg__vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    transparent 20%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+}

@@ -1,0 +1,389 @@
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+
+:root {
+  /* Easing */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Sizing */
+  --navbar-h: 52px;
+  --navbar-h-scrolled: 46px;
+
+  /* Color tokens */
+  --accent-rgb: 0, 102, 255;
+
+  /* ── 8px Grid Spacing System ── */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+  --space-3xl: 80px;
+  --space-4xl: 96px;
+  --space-5xl: 120px;
+}
+
+/* Dark theme (default) — layered, not flat black */
+[data-theme="dark"] {
+  --bg: #0a0a0f;
+  --bg-elevated: #0f1117;
+  --surface: #11131a;
+  --accent: #0066ff;
+  --text-primary: #EBEBEB;
+  --text-secondary: #888888;
+  --border: rgba(255, 255, 255, 0.07);
+  --pill-active-bg: #EBEBEB;
+  --pill-active-text: #0A0A0F;
+  --btn-filled-bg: #1A1A24;
+  --btn-filled-text: #EBEBEB;
+  --link-hover-bg: rgba(255, 255, 255, 0.06);
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --bg: #F7F7FA;
+  --surface: #FFFFFF;
+  --accent: #0066FF;
+  --text-primary: #0A0A0F;
+  --text-secondary: #6E6E82;
+  --border: rgba(0, 0, 0, 0.08);
+  --pill-active-bg: #0A0A0F;
+  --pill-active-text: #F0F0F5;
+  --btn-filled-bg: #0A0A0F;
+  --btn-filled-text: #F0F0F5;
+  --link-hover-bg: rgba(0, 0, 0, 0.05);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: initial;
+  scrollbar-width: thin;
+  scrollbar-color: #0066FF transparent;
+}
+
+html {
+  --cursor-x: 50vw;
+  --cursor-y: 38vh;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.8;
+  font-weight: 400;
+  background-color: var(--bg);
+  color: #9aa3b2;
+  overflow-x: hidden;
+  transition: background-color 400ms var(--ease-expo), color 400ms var(--ease-expo);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+/* ============================================================
+   MICRO DETAILS — Scrollbar, Selection, Cursor
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0066FF;
+  border-radius: 4px;
+}
+
+::selection {
+  background: #0066FF;
+  color: #fff;
+}
+
+::-moz-selection {
+  background: #0066FF;
+  color: #fff;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+/* ============================================================
+   PAGE CONTENT
+   ============================================================ */
+
+.page-content {
+  padding-top: var(--navbar-h);
+}
+
+.section-spacer {
+  height: 120vh;
+}
+
+/* ============================================================
+   GLOBAL PORTFOLIO FIXES
+   ============================================================ */
+
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* All sections — spacing */
+section,
+.section-wrapper {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-2xl);
+}
+
+/* Section label & heading spacing */
+.section-label {
+  margin-bottom: var(--space-sm);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #555555;
+}
+
+.section-heading {
+  margin-bottom: var(--space-xl);
+}
+
+/* All max-width containers */
+.section-container {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 clamp(var(--space-md), 5vw, 60px);
+}
+
+/* ── Responsive spacing ── */
+@media (max-width: 768px) {
+
+  section,
+  .section-wrapper {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+}
+
+/* LIGHT MODE GLOBAL FIXES */
+[data-theme="light"] .about-name,
+[data-theme="light"] [class*="name-heading"] {
+  color: #0A0A0F !important;
+  -webkit-text-fill-color: #0A0A0F !important;
+}
+
+[data-theme="light"] [class*="stat-value"],
+[data-theme="light"] [class*="stat-number"] {
+  color: #0A0A0F !important;
+}
+
+/* Ensure section backgrounds in light mode */
+[data-theme="light"] .tech-stack-section,
+[data-theme="light"] .featured-projects-section {
+  background: var(--bg, #F7F7FA) !important;
+}
+
+/* Dark theme body — flat base, global canvas sits above */
+[data-theme="dark"] body {
+  background-color: #0A0A0F;
+}
+
+section,
+.section-wrapper {
+  background: transparent;
+  background-color: transparent;
+}
+
+.card-bg {
+  background: rgba(255, 255, 255, 0.03);
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Reduce all section heading sizes */
+.featured-heading,
+.tech-heading,
+.about-heading,
+.connect-heading,
+.drives-heading,
+.about__name {
+  font-size: clamp(28px, 3.5vw, 48px) !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.1 !important;
+}
+
+/* Hero name exception */
+.hero-name,
+.hero__name {
+  font-size: clamp(56px, 7vw, 88px) !important;
+}
+
+/* ── Premium glass + ambient (allow depth; no blanket strip) ── */
+.portfolio-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(110px);
+  z-index: 0;
+}
+
+@keyframes portfolio-blob-a {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(32px, -22px) scale(1.04);
+  }
+}
+
+@keyframes portfolio-blob-b {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-28px, 26px) scale(1.06);
+  }
+}
+
+@keyframes portfolio-blob-c {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(18px, 12px) scale(1.02);
+  }
+
+  66% {
+    transform: translate(-14px, -18px) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-blob {
+    animation: none !important;
+  }
+}
+
+/* ── Navbar animations ── */
+@keyframes nb-shimmer {
+  0%, 100% { background-position: 0% 0; }
+  50%       { background-position: 200% 0; }
+}
+
+@keyframes nb-spin {
+  to { transform: rotate(360deg); }
+}
+
+.portfolio-atmosphere__cursor {
+  opacity: 0.52;
+}
+
+[data-theme='light'] .portfolio-atmosphere__cursor {
+  opacity: 0.22;
+}
+
+.portfolio-atmosphere__cursor-secondary {
+  opacity: 0.38;
+}
+
+[data-theme='light'] .portfolio-atmosphere__cursor-secondary {
+  opacity: 0.12;
+}
+
+.portfolio-atmosphere__noise {
+  opacity: 0.028;
+}
+
+[data-theme='light'] .portfolio-atmosphere__noise {
+  opacity: 0.016;
+}
+
+/* Section rhythm — canvas stacking context */
+[data-theme="dark"] .projects,
+[data-theme="dark"] .ts__section,
+[data-theme="dark"] .about__section,
+[data-theme="dark"] .inspiration__section,
+[data-theme="dark"] .connect-section {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* ============================================================
+   WORK PAGE — Project Grid Mobile
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .project-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .project-grid>div {
+    order: unset !important;
+  }
+
+  /* Info always first on mobile */
+  .project-grid>div:first-child {
+    order: 1 !important;
+  }
+
+  .project-grid>div:last-child {
+    order: 2 !important;
+  }
+}
+
+/* ============================================================
+   GSAP OPTIMIZATIONS
+   ============================================================ */
+.gsap-reveal {
+  will-change: transform, opacity;
+}

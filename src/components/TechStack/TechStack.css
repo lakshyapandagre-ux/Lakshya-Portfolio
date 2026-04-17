@@ -1,0 +1,454 @@
+/* ============================================================
+   TECH STACK SECTION
+   ============================================================ */
+.ts__section {
+  position: relative;
+  background: transparent;
+  padding: var(--space-4xl) 0;
+  overflow: hidden;
+  color: #EBEBEB;
+}
+
+.ts__top-border {
+  display: none;
+}
+
+/* ----------------------------------
+   PART 1: MARQUEE STRIP
+   ---------------------------------- */
+.ts__marquee-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  /* Space between rows */
+  margin-bottom: var(--space-md);
+  will-change: opacity, transform;
+}
+
+.marquee-container {
+  overflow: hidden;
+  width: 100%;
+  mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 25px;
+  width: max-content;
+  will-change: transform;
+}
+
+.marquee-left {
+  animation: scroll-left linear infinite;
+}
+
+.marquee-right {
+  animation: scroll-right linear infinite;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+@keyframes scroll-right {
+  0% {
+    transform: translateX(-33.333%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+
+.ts__marquee-card {
+  width: 88px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  border: 0px solid transparent;
+  border-radius: 14px;
+  flex-shrink: 0;
+  /* never compress */
+  transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+
+.ts__marquee-icon {
+  transition:
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ts__marquee-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: #888888;
+  letter-spacing: 0.02em;
+  text-align: center;
+  transition: color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ts__marquee-card:hover {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.ts__marquee-card::before,
+.ts__marquee-card::after {
+  display: none !important;
+}
+
+.ts__marquee-card:hover .ts__marquee-name {
+  color: #EBEBEB;
+}
+
+.ts__marquee-card:hover .ts__marquee-icon {
+  transform: scale(1.08);
+  filter: brightness(1.12);
+}
+
+/* ----------------------------------
+   PART 1.5: LEARNING BANNER
+   ---------------------------------- */
+.ts__learning-banner {
+  width: 100%;
+  background: transparent;
+  overflow: hidden;
+  margin-bottom: var(--space-xl);
+  will-change: opacity, transform;
+}
+
+.ts__learning-ticker {
+  display: flex;
+  width: max-content;
+  animation: scroll-left-ticker 18s linear infinite;
+  will-change: transform;
+}
+
+.ts__learning-ticker:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-left-ticker {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ts__learning-content {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  white-space: nowrap;
+}
+
+.ts__learning-icon {
+  color: #FFD700;
+  margin: 0 10px;
+}
+
+.ts__learning-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #0066FF;
+  margin-right: 12px;
+}
+
+.ts__learning-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ts__learning-tech {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: #888888;
+}
+
+.ts__learning-dot {
+  color: #555555;
+  margin: 0 12px;
+}
+
+.ts__learning-spacer {
+  display: inline-block;
+}
+
+/* ----------------------------------
+   PART 2: SECTION HEADER
+   ---------------------------------- */
+.ts__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 56px);
+  position: relative;
+  z-index: 2;
+}
+
+.ts__header {
+  position: relative;
+  margin-bottom: var(--space-2xl);
+}
+
+.ts__header-watermark {
+  position: absolute;
+  top: -40px;
+  left: -20px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 120px;
+  color: rgba(255, 255, 255, 0.025);
+  pointer-events: none;
+  z-index: 0;
+  line-height: 1;
+}
+
+.ts__header-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.ts__header-line {
+  width: 4px;
+  height: 60px;
+  background: var(--accent, #0066FF);
+  border-radius: 4px;
+}
+
+.tech-heading {
+  font-family: 'Syne', sans-serif !important;
+  font-weight: 800 !important;
+  font-size: clamp(28px, 3.5vw, 48px) !important;
+  color: #EBEBEB !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1 !important;
+  background: none !important;
+  -webkit-text-fill-color: #EBEBEB !important;
+  perspective: 800px;
+}
+
+.split-char {
+  display: inline-block;
+  transform-origin: center bottom;
+}
+
+/* ----------------------------------
+   PART 3: GRID & CARDS
+   ---------------------------------- */
+.ts__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: 40px;
+}
+
+.code-card {
+  background: rgba(255, 255, 255, 0.035);
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.code-card:hover {
+  background: rgba(255, 255, 255, 0.055);
+  border-color: rgba(0, 102, 255, 0.22);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow:
+    0 22px 50px rgba(0, 0, 0, 0.34),
+    0 0 0 1px rgba(0, 102, 255, 0.1),
+    0 0 36px rgba(0, 102, 255, 0.08);
+}
+
+
+.chip-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: #1a1a24;
+  border: 0.5px solid rgba(255,255,255,0.07) !important;
+  border-radius: 8px;
+  padding: 6px 10px;
+  white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 100;
+  box-shadow: none;
+}
+
+.chip-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgba(255,255,255,0.07) !important;
+}
+
+.tech-chip-wrapper:hover .chip-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ----------------------------------
+   PART 4: STATS BAR
+   ---------------------------------- */
+.ts__stats-bar {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: opacity, transform;
+  transition: opacity 1s ease 0.6s, transform 1s ease 0.6s;
+}
+
+.ts__section.in-view .ts__stats-bar {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ts__stat-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.ts__stat-number {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 40px;
+  color: #EBEBEB;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.ts__stat-plus {
+  color: #0066FF;
+}
+
+/* Animated Underline */
+.ts__stat-underline {
+  height: 1px;
+  background: #0066FF;
+  width: 0%;
+  margin: 6px 0;
+}
+
+.ts__stat-underline.draw {
+  animation: draw-line 1s ease-out forwards 1.2s;
+  /* delay so numbers load first */
+}
+
+@keyframes draw-line {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+.ts__stat-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: #888888;
+}
+
+.ts__stat-divider {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  /* height dynamically stretches with flex */
+}
+
+/* ----------------------------------
+   RESPONSIVE DESIGN
+   ---------------------------------- */
+@media (max-width: 900px) {
+  .ts__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ts__header-watermark {
+    font-size: 80px;
+    top: -20px;
+  }
+
+  .ts__stats-bar {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .ts__stat-divider {
+    display: none;
+  }
+
+  .ts__stat-block {
+    flex: 1 1 40%;
+  }
+}
+
+@media (max-width: 480px) {
+  .ts__section {
+    padding: 60px 0;
+  }
+  .tech-heading {
+    font-size: clamp(32px, 8vw, 42px) !important;
+  }
+  .ts__header {
+    margin-bottom: 40px;
+  }
+  .ts__header-watermark {
+    font-size: 60px;
+    top: -10px;
+  }
+  .ts__stat-number {
+    font-size: 32px;
+  }
+  .ts__marquee-card {
+    width: 72px;
+    height: 72px;
+  }
+  .code-card {
+    border-radius: 8px;
+  }
+}

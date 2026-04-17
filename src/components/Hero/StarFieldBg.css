@@ -1,0 +1,59 @@
+/* ============================================================
+   STAR FIELD BACKGROUND — Deep Space Atmosphere
+   ============================================================ */
+
+.starfield-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Canvas layer */
+.starfield-bg__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Layer A — Radial depth vignette */
+.starfield-bg__vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    transparent 30%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+}
+
+/* Layer B — Top edge fade (navbar blend) */
+.starfield-bg__fade-top {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    #0A0A0F 0%,
+    transparent 18%
+  );
+}
+
+/* Layer C — Bottom edge fade (section transition) */
+.starfield-bg__fade-bottom {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    #0A0A0F 0%,
+    transparent 22%
+  );
+}
