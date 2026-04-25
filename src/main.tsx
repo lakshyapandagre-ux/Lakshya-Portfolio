@@ -38,7 +38,18 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
   }
 }
 
-createRoot(document.getElementById('root')!).render(
+console.log("main.tsx: Starting execution...");
+
+try {
+  const rootElement = document.getElementById('root');
+  console.log("main.tsx: Root element found:", !!rootElement);
+
+  if (!rootElement) {
+    console.error("main.tsx: ERROR - Root element not found!");
+  }
+
+  createRoot(rootElement!).render(
+
   <StrictMode>
     <ErrorBoundary>
       <BrowserRouter>
@@ -46,4 +57,9 @@ createRoot(document.getElementById('root')!).render(
       </BrowserRouter>
     </ErrorBoundary>
   </StrictMode>,
-);
+  );
+  console.log("main.tsx: Render called successfully.");
+} catch (error) {
+  console.error("main.tsx: FATAL ERROR during render:", error);
+}
+

@@ -23,7 +23,9 @@ import Contact from './pages/Contact';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function App() {
+  console.log("App.tsx: Rendering App component...");
   const { theme, toggleTheme } = useTheme();
+
 
   return (
     <ReactLenis root options={{ lerp: 0.08, duration: 1.2, smoothWheel: true }}>
