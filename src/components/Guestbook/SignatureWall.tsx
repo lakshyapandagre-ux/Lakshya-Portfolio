@@ -74,7 +74,7 @@ export default function SignatureWall({ newEntry }: SignatureWallProps) {
       const snapshot = await getDocs(q);
 
       const newDocs: SignatureEntry[] = snapshot.docs.map(doc => {
-        const data = doc.data();
+        const data = doc.data() as any;
         return {
           id: doc.id,
           name: data.name ?? 'Anonymous',
