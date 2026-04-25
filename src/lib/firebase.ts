@@ -25,14 +25,28 @@ const firebaseConfig = {
 };
 
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase safely
+let app;
+let auth: any = null;
+let db: any = null;
+const googleProvider = new GoogleAuthProvider();
 
-// Auth
-export const auth = getAuth(app);
-export const googleProvider = new GoogleAuthProvider();
+const isConfigValid = 
+  import.meta.env.VITE_FIREBASE_API_KEY && 
+  import.meta.env.VITE_FIREBASE_API_KEY !== "MISSING_API_KEY";
 
-// Firestore
-export const db = getFirestore(app);
+if (isConfigValid) {
+  try {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+  } catch (error) {
+    console.error("Firebase initialization failed:", error);
+  }
+} else {
+  console.warn("Firebase environment variables are missing. Guestbook features will be disabled.");
+}
 
+export { auth, db, googleProvider };
 export default app;
+

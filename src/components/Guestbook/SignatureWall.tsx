@@ -71,7 +71,15 @@ export default function SignatureWall({ newEntry }: SignatureWallProps) {
         );
       }
 
+      if (!db) {
+        console.warn('Firestore db is not initialized.');
+        setSignatures([]);
+        setHasMore(false);
+        return;
+      }
+
       const snapshot = await getDocs(q);
+
 
       const newDocs: SignatureEntry[] = snapshot.docs.map(doc => {
         const data = doc.data() as any;

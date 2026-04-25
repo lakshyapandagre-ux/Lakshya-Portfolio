@@ -64,12 +64,17 @@ export default function GuestbookSection({ onNewSignature }: GuestbookSectionPro
      FIREBASE AUTH
      ══════════════════════════════════════════════════ */
   useEffect(() => {
+    if (!auth) {
+      setAuthReady(true);
+      return;
+    }
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
       setAuthReady(true);
     });
     return () => unsubscribe();
   }, []);
+
 
   /* ── GSAP transition ── */
   const animateState = useCallback(() => {
@@ -145,7 +150,9 @@ export default function GuestbookSection({ onNewSignature }: GuestbookSectionPro
   const handleLogin = async () => {
     try {
       setIsLoading(true);
+      if (!auth) throw new Error("Auth not initialized");
       await signInWithPopup(auth, googleProvider);
+
       setTimeout(animateState, 50);
     } catch (err) {
       console.error('Login failed:', err);
@@ -156,7 +163,9 @@ export default function GuestbookSection({ onNewSignature }: GuestbookSectionPro
 
   const handleLogout = async () => {
     try {
+      if (!auth) return;
       await signOut(auth);
+
       setHasDrawn(false);
       setMessage('');
       setTimeout(animateState, 50);
@@ -211,7 +220,9 @@ export default function GuestbookSection({ onNewSignature }: GuestbookSectionPro
 
       // 2. Save to Firestore in the background
       import('firebase/firestore').then(({ doc, setDoc }) => {
+        if (!db) return;
         setDoc(doc(db, 'signatures', newId), {
+
           name: newSig.name,
           email: newSig.email,
           avatar_url: newSig.avatar_url ?? null,
