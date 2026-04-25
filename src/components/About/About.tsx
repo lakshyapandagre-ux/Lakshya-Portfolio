@@ -6,9 +6,11 @@ interface SpotifyTrack {
   song: string;
   artist: string;
   coverUrl?: string;
-  progress: number;
-  elapsed: string;
-  duration: string;
+  progress?: number;
+  elapsed?: string;
+  duration?: string;
+  isPlaying?: boolean;
+  songUrl?: string;
 }
 
 interface SocialLink {
@@ -94,7 +96,7 @@ const SpotifyWidget = memo(({ track }: { track: SpotifyTrack }) => (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="#1ED760" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 01-.853.206c-2.336-1.426-5.275-1.748-8.733-.956a.625.625 0 11-.274-1.218c3.782-.866 7.02-.486 9.654 1.115a.623.623 0 01.206.853zm1.192-3.21c-.194.316-.607.417-.923.223-2.666-1.637-6.732-2.1-9.74-.15a.705.705 0 01-.96-.285.705.705 0 01.285-.96c3.55-2.26 8.04-1.737 11.116 1.147.316.195.417.608.222.923zm.116-3.354C14.67 7.965 8.51 7.765 4.965 8.84a.89.89 0 01-1.142-.58.892.892 0 01.58-1.142C8.528 5.865 15.352 6.096 18.98 8.24c.343.203.456.646.253.989a.893.893 0 01-.99.253z" />
       </svg>
-      <span className="about__spotify-label">Last played</span>
+      <span className="about__spotify-label">{track.isPlaying ? "Listening Now \uD83C\uDFA7" : "Last played"}</span>
     </div>
 
     <div className="about__spotify-bottom" style={{ gap: '14px', justifyContent: 'flex-start', width: '100%' }}>
@@ -105,7 +107,9 @@ const SpotifyWidget = memo(({ track }: { track: SpotifyTrack }) => (
             width: '56px',
             height: '56px',
             borderRadius: '10px',
-            background: 'linear-gradient(135deg, #1a472a, #1ED760)',
+            background: track.coverUrl 
+              ? `url(${track.coverUrl}) center/cover no-repeat`
+              : 'linear-gradient(135deg, #1a472a, #1ED760)',
             flexShrink: 0,
             boxShadow: 'none',
           }}
@@ -138,48 +142,84 @@ const SpotifyWidget = memo(({ track }: { track: SpotifyTrack }) => (
           >
             by {track.artist}
           </div>
-          <div className="about__spotify-progress-wrapper">
-            <div className="about__spotify-progress-bg">
-              <div className="about__spotify-progress-fill" style={{ width: `${track.progress}%` }} />
+          {(track.progress !== undefined || track.elapsed !== undefined) && (
+            <div className="about__spotify-progress-wrapper">
+              <div className="about__spotify-progress-bg">
+                <div className="about__spotify-progress-fill" style={{ width: `${track.progress || 0}%` }} />
+              </div>
+              <div className="about__spotify-times" style={{ marginTop: '5px' }}>
+                <span>{track.elapsed}</span>
+                <span>/</span>
+                <span>{track.duration}</span>
+              </div>
             </div>
-            <div className="about__spotify-times" style={{ marginTop: '5px' }}>
-              <span>{track.elapsed}</span>
-              <span>/</span>
-              <span>{track.duration}</span>
-            </div>
-          </div>
+          )}
         </div>
       </div>
 
-      <button
-        className="about__spotify-play"
-        style={{
-          width: '40px',
-          height: '40px',
-          borderRadius: '50%',
-          background: 'rgba(255,255,255,0.08)',
-          border: '1px solid rgba(255,255,255,0.1)',
-          color: '#F0F0F5',
-          cursor: 'pointer',
-          flexShrink: 0,
-          transition: 'all 0.2s ease',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.background = '#1ED760';
-          e.currentTarget.style.color = '#000';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
-          e.currentTarget.style.color = '#F0F0F5';
-        }}
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8 5v14l11-7z" />
-        </svg>
-      </button>
+      {track.songUrl ? (
+        <a href={track.songUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'flex' }}>
+          <button
+            className="about__spotify-play"
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              background: 'rgba(255,255,255,0.08)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              color: '#F0F0F5',
+              cursor: 'pointer',
+              flexShrink: 0,
+              transition: 'all 0.2s ease',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = '#1ED760';
+              e.currentTarget.style.color = '#000';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
+              e.currentTarget.style.color = '#F0F0F5';
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </button>
+        </a>
+      ) : (
+        <button
+          className="about__spotify-play"
+          style={{
+            width: '40px',
+            height: '40px',
+            borderRadius: '50%',
+            background: 'rgba(255,255,255,0.08)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            color: '#F0F0F5',
+            cursor: 'pointer',
+            flexShrink: 0,
+            transition: 'all 0.2s ease',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = '#1ED760';
+            e.currentTarget.style.color = '#000';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
+            e.currentTarget.style.color = '#F0F0F5';
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </button>
+      )}
     </div>
   </div>
 ));
@@ -240,6 +280,24 @@ const PFPPanel = memo(() => (
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const inView = useInView(sectionRef, 0.2);
+  const [spotifyData, setSpotifyData] = useState<SpotifyTrack>(LAST_PLAYED);
+
+  useEffect(() => {
+    fetch('/api/spotify')
+      .then(res => res.json())
+      .then(data => {
+        if (data.title) {
+          setSpotifyData({
+            song: data.title,
+            artist: data.artist,
+            coverUrl: data.albumImage,
+            songUrl: data.songUrl,
+            isPlaying: data.isPlaying,
+          });
+        }
+      })
+      .catch(err => console.error("Failed to fetch spotify data:", err));
+  }, []);
 
   return (
     <section className={`about__section ${inView ? 'in-view' : ''}`} ref={sectionRef}>
@@ -348,7 +406,7 @@ export default function AboutSection() {
           <div className="about__separator sep-bot anim-phase-5" />
 
           {/* Spotify Base floats naked */}
-          <SpotifyWidget track={LAST_PLAYED} />
+          <SpotifyWidget track={spotifyData} />
 
         </div>
       </div>
