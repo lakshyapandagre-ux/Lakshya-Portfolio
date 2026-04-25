@@ -5,6 +5,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { useTilt } from '../hooks/useTilt';
 import { useMagneticHover } from '../hooks/useMagneticHover';
+import GuestbookSection from '../components/Guestbook/GuestbookSection';
+import SignatureWall from '../components/Guestbook/SignatureWall';
+import type { SignatureEntry } from '../components/Guestbook/SignatureCard';
 import './Contact.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -53,11 +56,7 @@ const ArrowUpRight = () => (
   </svg>
 );
 
-const StarIcon = ({ filled }: { filled: boolean }) => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill={filled ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-  </svg>
-);
+
 
 /* ═══════════════════════════════════════════════════
    DATA
@@ -111,26 +110,7 @@ const SOCIALS = [
   },
 ];
 
-const TESTIMONIALS = [
-  {
-    name: 'Arjun S.',
-    role: 'Frontend Developer',
-    message: 'Lakshya\'s attention to detail is incredible. The portfolio he built felt like a product, not just a website.',
-    avatar: 'A',
-  },
-  {
-    name: 'Priya K.',
-    role: 'UI/UX Designer',
-    message: 'Working with Lakshya was seamless. He understands design systems deeply and ships pixel-perfect code.',
-    avatar: 'P',
-  },
-  {
-    name: 'Rahul M.',
-    role: 'ML Engineer',
-    message: 'His ability to bridge frontend and ML is rare. AudioSnap was a clean integration of complex audio pipelines.',
-    avatar: 'R',
-  },
-];
+
 
 const PARTICLES = Array.from({ length: 30 }).map((_, i) => ({
   id: i,
@@ -146,7 +126,7 @@ const PARTICLES = Array.from({ length: 30 }).map((_, i) => ({
 
 function SocialCardNode({ s }: { s: typeof SOCIALS[0] }) {
   const { handleMove, handleLeave } = useTilt();
-  
+
   return (
     <a
       href={s.url}
@@ -181,17 +161,12 @@ export default function Contact() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [newSignature, setNewSignature] = useState<SignatureEntry | null>(null);
 
-  /* ── Rating state ── */
-  const [rating, setRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(0);
-  const [ratingComment, setRatingComment] = useState('');
-  const [ratingSubmitted, setRatingSubmitted] = useState(false);
 
   /* ── GSAP stagger refs ── */
   const socialCardsRef = useRef<HTMLDivElement>(null);
-  const testimonialRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLDivElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
@@ -203,71 +178,66 @@ export default function Contact() {
   const ctaBtn2Ref = useMagneticHover<HTMLAnchorElement>();
 
   useGSAP(() => {
-    // Hero entrance
-    if (heroRef.current) {
-      gsap.fromTo(heroRef.current.querySelectorAll('.ct-hero-anim'),
-        { opacity: 0, y: 40, filter: 'blur(8px)' },
-        {
-          opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, stagger: 0.12, ease: 'power3.out',
-          scrollTrigger: { trigger: heroRef.current, start: 'top 85%', once: true }
-        }
-      );
-    }
+    const timeout = setTimeout(() => {
+      // Hero entrance
+      if (heroRef.current) {
+        gsap.fromTo(heroRef.current.querySelectorAll('.ct-hero-anim'),
+          { opacity: 0, y: 40, filter: 'blur(8px)' },
+          {
+            opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, stagger: 0.12, ease: 'power3.out',
+            scrollTrigger: { trigger: heroRef.current, start: 'top 85%', once: true }
+          }
+        );
+      }
 
-    // Social cards stagger
-    if (socialCardsRef.current) {
-      gsap.fromTo(socialCardsRef.current.querySelectorAll('.ct-social-card'),
-        { opacity: 0, y: 40, scale: 0.97, filter: 'blur(8px)' },
-        {
-          opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.8, stagger: 0.1, ease: 'power3.out',
-          scrollTrigger: { trigger: socialCardsRef.current, start: 'top 80%', once: true }
-        }
-      );
-    }
+      // Social cards stagger
+      if (socialCardsRef.current) {
+        gsap.fromTo(socialCardsRef.current.querySelectorAll('.ct-social-card'),
+          { opacity: 0, y: 40, scale: 0.97, filter: 'blur(8px)' },
+          {
+            opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.8, stagger: 0.1, ease: 'power3.out',
+            scrollTrigger: { trigger: socialCardsRef.current, start: 'top 80%', once: true }
+          }
+        );
+      }
 
-    // Form reveal
-    if (formRef.current) {
-      gsap.fromTo(formRef.current.querySelectorAll('.ct-form-anim'),
-        { opacity: 0, y: 40, filter: 'blur(8px)' },
-        {
-          opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.9, stagger: 0.1, ease: 'power3.out',
-          scrollTrigger: { trigger: formRef.current, start: 'top 80%', once: true }
-        }
-      );
-    }
+      // Form reveal
+      if (formRef.current) {
+        gsap.fromTo(formRef.current.querySelectorAll('.ct-form-anim'),
+          { opacity: 0, y: 40, filter: 'blur(8px)' },
+          {
+            opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.9, stagger: 0.1, ease: 'power3.out',
+            scrollTrigger: { trigger: formRef.current, start: 'top 80%', once: true }
+          }
+        );
+      }
 
-    // Testimonials
-    if (testimonialRef.current) {
-      gsap.fromTo(testimonialRef.current.querySelectorAll('.ct-testimonial-card'),
-        { opacity: 0, y: 40, filter: 'blur(8px)' },
-        {
-          opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, stagger: 0.12, ease: 'power3.out',
-          scrollTrigger: { trigger: testimonialRef.current, start: 'top 80%', once: true }
-        }
-      );
-    }
 
-    // Status block
-    if (statusRef.current) {
-      gsap.fromTo(statusRef.current,
-        { opacity: 0, y: 40, filter: 'blur(8px)' },
-        {
-          opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.9, ease: 'power3.out',
-          scrollTrigger: { trigger: statusRef.current, start: 'top 85%', once: true }
-        }
-      );
-    }
 
-    // CTA
-    if (ctaRef.current) {
-      gsap.fromTo(ctaRef.current.querySelectorAll('.ct-cta-anim'),
-        { opacity: 0, y: 40, filter: 'blur(8px)' },
-        {
-          opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, stagger: 0.12, ease: 'power3.out',
-          scrollTrigger: { trigger: ctaRef.current, start: 'top 85%', once: true }
-        }
-      );
-    }
+      // Status block
+      if (statusRef.current) {
+        gsap.fromTo(statusRef.current,
+          { opacity: 0, y: 40, filter: 'blur(8px)' },
+          {
+            opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: statusRef.current, start: 'top 85%', once: true }
+          }
+        );
+      }
+
+      // CTA
+      if (ctaRef.current) {
+        gsap.fromTo(ctaRef.current.querySelectorAll('.ct-cta-anim'),
+          { opacity: 0, y: 40, filter: 'blur(8px)' },
+          {
+            opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, stagger: 0.12, ease: 'power3.out',
+            scrollTrigger: { trigger: ctaRef.current, start: 'top 85%', once: true }
+          }
+        );
+      }
+    }, 50);
+
+    return () => clearTimeout(timeout);
   }, { scope: pageRef });
 
   /* ── Terminal typing effect ── */
@@ -283,24 +253,42 @@ export default function Contact() {
     return () => clearInterval(timer);
   }, []);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !message) return;
     setFormStatus('sending');
-    setTimeout(() => {
-      setFormStatus('sent');
-      setTimeout(() => {
-        setFormStatus('idle');
-        setName(''); setEmail(''); setMessage('');
-      }, 3000);
-    }, 1500);
+
+    try {
+      const response = await fetch("/api/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+        }),
+      });
+
+      if (response.ok) {
+        setFormStatus('sent');
+        setTimeout(() => {
+          setFormStatus('idle');
+          setName(''); setEmail(''); setMessage('');
+        }, 3000);
+      } else {
+        setFormStatus('error');
+        setTimeout(() => setFormStatus('idle'), 4000);
+      }
+    } catch (error) {
+      console.error(error);
+      setFormStatus('error');
+      setTimeout(() => setFormStatus('idle'), 4000);
+    }
   };
 
-  const handleRatingSubmit = () => {
-    if (rating === 0) return;
-    setRatingSubmitted(true);
-    setTimeout(() => setRatingSubmitted(false), 4000);
-  };
+
 
   return (
     <main ref={pageRef} className="ct-page">
@@ -439,6 +427,8 @@ export default function Contact() {
                     <span className="ct-submit-loading">Sending...</span>
                   ) : formStatus === 'sent' ? (
                     <span className="ct-submit-success">✓ Message Sent!</span>
+                  ) : formStatus === 'error' ? (
+                    <span className="ct-submit-error">Failed to send ✕</span>
                   ) : (
                     <>
                       <span>Send Message</span>
@@ -485,87 +475,16 @@ export default function Contact() {
       </section>
 
       {/* ═══════════════════════════════════════════
-          SECTION 4: RATING
+          SECTION 4: GUESTBOOK & SIGNATURE WALL
           ═══════════════════════════════════════════ */}
-      <section className="ct-section gsap-reveal">
-        <div className="ct-container ct-center">
-          <div className="ct-section-header">
-            <span className="ct-label">FEEDBACK</span>
-            <h2 className="ct-section-heading">
-              Rate the <span className="ct-gradient-text ct-italic">experience</span>
-            </h2>
-          </div>
-
-          <div className="ct-rating-card">
-            {ratingSubmitted ? (
-              <div className="ct-rating-thanks">
-                <span className="ct-rating-thanks-icon">✦</span>
-                <p>Thank you for your feedback!</p>
-              </div>
-            ) : (
-              <>
-                <div className="ct-stars">
-                  {[1, 2, 3, 4, 5].map(star => (
-                    <button
-                      key={star}
-                      className={`ct-star-btn ${(hoverRating || rating) >= star ? 'ct-star-btn--active' : ''}`}
-                      onMouseEnter={() => setHoverRating(star)}
-                      onMouseLeave={() => setHoverRating(0)}
-                      onClick={() => setRating(star)}
-                    >
-                      <StarIcon filled={(hoverRating || rating) >= star} />
-                    </button>
-                  ))}
-                </div>
-                <textarea
-                  className="ct-input ct-textarea ct-rating-comment"
-                  placeholder="Leave a comment (optional)..."
-                  rows={3}
-                  value={ratingComment}
-                  onChange={e => setRatingComment(e.target.value)}
-                />
-                <button className="ct-submit-btn ct-rating-submit" onClick={handleRatingSubmit} disabled={rating === 0}>
-                  Submit Feedback
-                </button>
-              </>
-            )}
-          </div>
+      <section className="guestbook-section">
+        <div className="section-label">
+          <span className="label-dot" />
+          GUESTBOOK
+          <span className="label-dot" />
         </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          SECTION 5: TESTIMONIALS
-          ═══════════════════════════════════════════ */}
-      <section className="ct-section">
-        <div className="ct-container">
-          <div className="ct-section-header gsap-reveal">
-            <span className="ct-label">TESTIMONIALS</span>
-            <h2 className="ct-section-heading">
-              What people <span className="ct-gradient-text">say</span>
-            </h2>
-          </div>
-
-          <div className="ct-testimonial-grid" ref={testimonialRef}>
-            {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="ct-testimonial-card">
-                <div className="ct-testimonial-top">
-                  <div className="ct-testimonial-avatar" style={{
-                    background: i === 0 ? 'linear-gradient(135deg, #3b82f6, #6366f1)' :
-                      i === 1 ? 'linear-gradient(135deg, #8b5cf6, #ec4899)' :
-                        'linear-gradient(135deg, #06b6d4, #3b82f6)'
-                  }}>
-                    {t.avatar}
-                  </div>
-                  <div>
-                    <h4 className="ct-testimonial-name">{t.name}</h4>
-                    <p className="ct-testimonial-role">{t.role}</p>
-                  </div>
-                </div>
-                <p className="ct-testimonial-msg">"{t.message}"</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <GuestbookSection onNewSignature={setNewSignature} />
+        <SignatureWall newEntry={newSignature} />
       </section>
 
       {/* ═══════════════════════════════════════════

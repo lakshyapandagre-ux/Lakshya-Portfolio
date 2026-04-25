@@ -42,21 +42,37 @@ export default function ConnectSection() {
   const [cfName, setCfName] = useState('');
   const [cfEmail, setCfEmail] = useState('');
   const [cfMsg, setCfMsg] = useState('');
-  const [cfStatus, setCfStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  const [cfStatus, setCfStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const containerRef = useGSAPScrollReveal<HTMLElement>({ stagger: 0.1 });
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!cfName || !cfEmail || !cfMsg) return;
     setCfStatus('loading');
-    setTimeout(() => {
-      setCfStatus('success');
-      setTimeout(() => {
-        setCfStatus('idle');
-        setCfName(''); setCfEmail(''); setCfMsg('');
-      }, 3000);
-    }, 1500);
+
+    try {
+      const res = await fetch('http://localhost:5000/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: cfName, email: cfEmail, message: cfMsg }),
+      });
+
+      if (res.ok) {
+        setCfStatus('success');
+        setTimeout(() => {
+          setCfStatus('idle');
+          setCfName(''); setCfEmail(''); setCfMsg('');
+        }, 3000);
+      } else {
+        setCfStatus('error');
+        setTimeout(() => setCfStatus('idle'), 4000);
+      }
+    } catch (err) {
+      console.error('Failed to send:', err);
+      setCfStatus('error');
+      setTimeout(() => setCfStatus('idle'), 4000);
+    }
   };
 
   return (
@@ -205,7 +221,7 @@ export default function ConnectSection() {
                   </div>
                   
                   <button type="submit" className="nc-submit" disabled={cfStatus !== 'idle'}>
-                     {cfStatus === 'loading' ? 'Sending...' : cfStatus === 'success' ? 'Message Sent!' : <>Send Message <ArrowRightUp /></>}
+                     {cfStatus === 'loading' ? 'Sending...' : cfStatus === 'success' ? 'Message Sent! ✓' : cfStatus === 'error' ? 'Failed to send ✕' : <><span>Send Message</span> <ArrowRightUp /></>}
                   </button>
 
                   <div className="nc-form-footer">

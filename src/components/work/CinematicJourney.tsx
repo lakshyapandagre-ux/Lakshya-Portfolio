@@ -584,19 +584,10 @@ function StoryBlock({ block, isMobile }: any) {
           whileInView={{ opacity: 1, x: 0, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          whileHover={{
-            boxShadow: '0 20px 60px -10px rgba(0,102,255,0.08)',
-            borderColor: 'rgba(0,102,255,0.15)',
-            transition: { duration: 0.4 }
-          }}
           style={{
             width: '100%',
             position: 'relative',
             padding: isMobile ? '32px 24px' : '48px',
-            background: 'rgba(10, 10, 15, 0.4)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.04)',
-            borderRadius: '24px',
             overflow: 'hidden'
           }}
         >

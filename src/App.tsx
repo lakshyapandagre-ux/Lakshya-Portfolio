@@ -1,4 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ScrollToTop from './components/ScrollToTop';
 import './styles/global.css';
 import Navbar from './components/Navbar/Navbar';
 import HeroSection from './components/Hero/HeroSection';
@@ -17,6 +20,8 @@ import Work from './pages/Work';
 import Lakshya from './pages/Lakshya';
 import Contact from './pages/Contact';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function App() {
   const { theme, toggleTheme } = useTheme();
 
@@ -27,6 +32,8 @@ export default function App() {
       <ClickSpark sparkColor='#fff' sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
         <div className="relative z-[1] min-h-screen">
           <Navbar theme={theme} onToggleTheme={toggleTheme} />
+          
+          <ScrollToTop />
 
           <Routes>
             <Route path="/" element={

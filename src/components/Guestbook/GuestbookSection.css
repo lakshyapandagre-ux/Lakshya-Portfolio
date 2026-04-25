@@ -1,0 +1,694 @@
+/* ═══════════════════════════════════════════════════════════
+   GUESTBOOK SECTION — PREMIUM SIGNATURE EXPERIENCE
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Section wrapper ── */
+.gb-section {
+  position: relative;
+  z-index: 1;
+  padding: 80px 0;
+}
+
+.gb-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.gb-header {
+  margin-bottom: 48px;
+}
+
+.gb-label {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: #6b7280;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.gb-heading {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.gb-gradient-text {
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gb-italic {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 700;
+}
+
+@keyframes gb-shimmer {
+  to { background-position: 200% center; }
+}
+
+/* ── State wrapper (for GSAP transitions) ── */
+.gb-state-wrap {
+  width: 100%;
+  max-width: 720px;
+}
+
+/* ═══════════════════════════════════════════════════
+   STATE 1: AUTH GATE
+   ═══════════════════════════════════════════════════ */
+
+.guestbook-auth-card {
+  width: 100%;
+  max-width: 580px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.guestbook-auth-card::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.auth-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.auth-icon-wrap svg {
+  color: #a855f7;
+  width: 24px;
+  height: 24px;
+}
+
+.gb-auth-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  color: white;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.auth-subtext {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #64748b;
+  text-align: center;
+  line-height: 1.6;
+  max-width: 320px;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 28px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  max-width: 280px;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.google-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.auth-divider {
+  width: 100%;
+  max-width: 280px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 4px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.auth-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #374151;
+  letter-spacing: 0.02em;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════════════════
+   STATE 2: SIGNATURE CANVAS
+   ═══════════════════════════════════════════════════ */
+
+.gb-canvas-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 24px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 20px 60px -12px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 720px;
+}
+
+/* Gradient border */
+.gb-canvas-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), transparent 50%, rgba(139, 92, 246, 0.15));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.gb-canvas-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.gb-canvas-area {
+  position: relative;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Radial glow behind canvas */
+.gb-canvas-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 200px;
+  background: radial-gradient(ellipse, rgba(99, 102, 241, 0.08), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gb-canvas-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.gb-canvas {
+  width: 100%;
+  height: 200px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: crosshair;
+  touch-action: none;
+  display: block;
+}
+
+.gb-canvas-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #4b5563;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Controls bar below canvas */
+.gb-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  gap: 16px;
+}
+
+.gb-signing-as {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gb-signing-as span {
+  color: #a78bfa;
+  font-weight: 600;
+}
+
+.gb-controls-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.gb-btn-clear {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #9ca3af;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gb-btn-clear:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f0f0f5;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.gb-btn-sign {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #3b82f6, #6366f1, #8b5cf6);
+  border: none;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.25);
+}
+
+.gb-btn-sign:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
+}
+
+.gb-btn-sign:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ═══════════════════════════════════════════════════
+   STATE 3: SUCCESS + SIGNATURES GRID
+   ═══════════════════════════════════════════════════ */
+
+.gb-success-wrap {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+}
+
+.gb-success-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.gb-success-check {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(139, 92, 246, 0.12));
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a78bfa;
+  font-size: 24px;
+  animation: gb-icon-glow 4s ease-in-out infinite;
+}
+
+.gb-success-text {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 700;
+  color: #f0f0f5;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.gb-success-sub {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Signatures grid */
+.gb-sigs-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.gb-sigs-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: #6b7280;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.gb-sigs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+.gb-sig-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gb-sig-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.3);
+}
+
+.gb-sig-preview {
+  width: 100%;
+  height: 80px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  object-fit: contain;
+}
+
+.gb-sig-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gb-sig-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e4e4e7;
+  margin: 0;
+}
+
+.gb-sig-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: #4b5563;
+}
+
+/* ── Sign Again button ── */
+.gb-sign-again {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #9ca3af;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gb-sign-again:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f0f0f5;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Logout button (inline) ── */
+.gb-btn-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.gb-btn-logout:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+/* ── Success actions row ── */
+.gb-success-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.gb-btn-logout-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #6b7280;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gb-btn-logout-text:hover {
+  background: rgba(239, 68, 68, 0.06);
+  border-color: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+/* ── Google button disabled state ── */
+.gb-google-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .gb-section {
+    padding: 56px 0;
+  }
+
+  .gb-auth-card {
+    padding: 40px 28px;
+  }
+
+  .gb-canvas {
+    height: 160px;
+  }
+
+  .gb-canvas-area {
+    padding: 24px;
+  }
+
+  .gb-controls {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px 24px;
+    gap: 12px;
+  }
+
+  .gb-signing-as {
+    justify-content: center;
+  }
+
+  .gb-controls-btns {
+    justify-content: center;
+  }
+
+  .gb-sigs-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .gb-sigs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gb-controls-btns {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .gb-btn-clear,
+  .gb-btn-sign {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   NEW GUESTBOOK FORM STYLES
+   ═══════════════════════════════════════════════════ */
+
+.gb-message-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  resize: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #94a3b8;
+  transition: border-color 0.2s ease;
+}
+
+.gb-message-input:focus {
+  outline: none;
+  border-bottom-color: rgba(168, 85, 247, 0.5);
+}
+
+.gb-message-input::placeholder {
+  color: #4a5568;
+}
+
+.gb-char-count {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+}
+
+.gb-loggedout-subtext {
+  font-family: 'JetBrains Mono', monospace;
+  color: #4a5568;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.gb-success-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background: rgba(255,255,255,0.02);
+  border: 1px dashed rgba(168,85,247,0.3);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.gb-success-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.gb-success-subtext {
+  font-family: 'JetBrains Mono', monospace;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
