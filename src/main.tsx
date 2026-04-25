@@ -16,16 +16,16 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.setState({ errorInfo });
-    console.error("ErrorBoundary caught an error", error, errorInfo);
+    console.error('ErrorBoundary caught an error', error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ padding: '40px', background: '#220000', color: '#ffaaaa', minHeight: '100vh', fontFamily: 'monospace' }}>
-          <h2>Something went wrong in React.</h2>
+        <div style={{ padding: '40px', background: '#0d0d0d', color: '#ffaaaa', minHeight: '100vh', fontFamily: 'monospace' }}>
+          <h2>Something went wrong.</h2>
           <details style={{ whiteSpace: 'pre-wrap' }}>
-            <summary>Click for error details</summary>
+            <summary>Error details</summary>
             <br />
             {this.state.error && this.state.error.toString()}
             <br />
@@ -38,18 +38,9 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
   }
 }
 
-console.log("main.tsx: Starting execution...");
+const rootElement = document.getElementById('root');
 
-try {
-  const rootElement = document.getElementById('root');
-  console.log("main.tsx: Root element found:", !!rootElement);
-
-  if (!rootElement) {
-    console.error("main.tsx: ERROR - Root element not found!");
-  }
-
-  createRoot(rootElement!).render(
-
+createRoot(rootElement!).render(
   <StrictMode>
     <ErrorBoundary>
       <BrowserRouter>
@@ -57,9 +48,4 @@ try {
       </BrowserRouter>
     </ErrorBoundary>
   </StrictMode>,
-  );
-  console.log("main.tsx: Render called successfully.");
-} catch (error) {
-  console.error("main.tsx: FATAL ERROR during render:", error);
-}
-
+);

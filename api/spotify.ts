@@ -27,9 +27,6 @@ const getAccessToken = async (): Promise<string> => {
 
   const data = await res.json()
 
-  // ADD THIS — log exact Spotify error
-  console.log('[Spotify Token Response]:', JSON.stringify(data))
-
   if (data.error) {
     throw new Error(`Spotify token error: ${data.error} — ${data.error_description}`)
   }
@@ -37,21 +34,20 @@ const getAccessToken = async (): Promise<string> => {
   return data.access_token
 }
 
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN ?? '*'
+
 export default async function handler(
   req: VercelRequest,
   res: VercelResponse
 ) {
-  // CORS — allow frontend to call this
-  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGIN)
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
 
-  // Handle preflight
   if (req.method === 'OPTIONS') {
     return res.status(200).end()
   }
 
-  // Only allow GET
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' })
   }
@@ -117,15 +113,13 @@ export default async function handler(
       progress: 0,
     })
   } catch (error) {
-    // Log exact error
-    console.error('[Spotify API Full Error]:', error)
+    console.error('[Spotify API Error]:', error)
     return res.status(200).json({
       isPlaying: false,
       title: null,
       artist: null,
       albumArt: null,
       songUrl: null,
-      error: String(error) // temporarily show error in response
     })
   }
 }

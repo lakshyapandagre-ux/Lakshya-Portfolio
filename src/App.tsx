@@ -25,7 +25,6 @@ import { SpotifyProvider } from './context/SpotifyContext';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function App() {
-  console.log("App.tsx: Rendering App component...");
   const { theme, toggleTheme } = useTheme();
 
 
