@@ -12,6 +12,7 @@ export interface Project {
   caseStudyRoute: string
   liveUrl: string
   videoUrl: string
+  images?: string[]
   githubUrl?: string
 }
 
@@ -58,22 +59,68 @@ export const projects: Project[] = [
     tech: ['React', 'TypeScript', 'Node.js', 'Supabase'],
     caseStudyRoute: '/work/educonnect',
     liveUrl: 'https://example.com',
-    videoUrl: '/videos/educonnect.mp4',
+    videoUrl: '',
+    images: [
+      '/edu-connect.jpg.png',
+      '/edu-connect2.jpg.png',
+      '/edu-connect3.jpg.png',
+      '/edu-connect4.jpg.png',
+      '/edu-connect5.jpg.png',
+      '/edu-connect6.jpg.png',
+      '/edu-connect7.jpg.png',
+      '/edu-connect8.jpg.png',
+      '/edu-connect9.jpg.png'
+    ],
     githubUrl: 'https://github.com/lakshyapandagre-ux/educonnect',
   },
   {
-    id: 'portfolio',
+    id: 'resq',
     number: '02',
-    name: 'Portfolio OS',
-    accentColor: '#00FF88',
-    tagline: 'Interactive developer portfolio',
+    name: 'ResQ',
+    accentColor: '#FF3333',
+    tagline: 'Smart civic issue reporting platform',
     description:
-      'A cinematic portfolio experience with 3D scenes, smooth scroll, and case studies.',
-    features: ['3D hero scene', 'Lenis smooth scroll', 'Case study routes'],
-    tech: ['React', 'TypeScript', 'Three.js', 'Tailwind CSS'],
-    caseStudyRoute: '/work/portfolio',
-    liveUrl: 'https://lakshya.dev',
-    videoUrl: '/videos/portfolio.mp4',
-    githubUrl: 'https://github.com/lakshyapandagre-ux/portfolio',
+      'A smart civic platform for reporting and resolving city-level issues with real-time tracking, authority dashboards, and automated workflows.',
+    features: [
+      'Real-time issue tracking with live status updates',
+      'Authority dashboard for managing complaints',
+      'Location-based reporting with interactive maps',
+    ],
+    tech: ['React', 'TypeScript', 'Supabase', 'Tailwind CSS'],
+    caseStudyRoute: '/work/resq',
+    liveUrl: 'https://res-q-team-mind-forge.vercel.app/',
+    videoUrl: '',
+    images: [
+      '/res-q1.jpg.png',
+      '/res-q2.jpg.png',
+      '/res-q3.jpg.png',
+      '/res-q4.jpg.png',
+      '/res-q5.jpg.png',
+      '/res-q6.jpg.png',
+      '/res-q7.jpg.png',
+      '/res-q8.jpg.png',
+      '/res-q9.jpg.png'
+    ],
+    githubUrl: 'https://github.com/lakshyapandagre-ux/ResQ---Team-MindForge',
+  },
+  {
+    id: 'audiosnap',
+    number: '03',
+    name: 'AudioSnap',
+    accentColor: '#7C3AED',
+    tagline: 'AI-powered audio intelligence tool',
+    description:
+      'Snap any audio — get instant transcription, speaker detection, and AI-powered summaries in seconds.',
+    features: [
+      'Real-time audio transcription with high accuracy',
+      'Speaker diarization — detects who said what',
+      'AI-generated summaries and key point extraction',
+    ],
+    tech: ['React', 'TypeScript', 'Python', 'FastAPI'],
+    caseStudyRoute: '/work/audiosnap',
+    liveUrl: 'https://audio-snap-muoe.vercel.app/',
+    videoUrl: '',
+    images: ['/audio-snap.jpg.png', '/audio-snp3.jpg.png', '/audio-snp4.jpg.png'],
+    githubUrl: 'https://github.com/lakshyapandagre-ux/AudioSnap-.git',
   },
 ]

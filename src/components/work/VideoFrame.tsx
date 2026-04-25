@@ -2,15 +2,29 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from 'framer-motion'
 
 interface VideoFrameProps {
-  videoUrl: string
+  videoUrl?: string
+  images?: string[]
   projectName: string
   accentColor: string
 }
 
-const VideoFrame = ({ videoUrl, projectName, accentColor }: VideoFrameProps) => {
+const VideoFrame = ({ videoUrl, images, projectName, accentColor }: VideoFrameProps) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isInView, setIsInView] = useState(false)
+
+  // Slideshow logic
+  useEffect(() => {
+    if (!images || images.length === 0 || !isInView) return
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length)
+    }, 1500) // 1.5 seconds per frame for a video-like feel
+
+    return () => clearInterval(interval)
+  }, [images, isInView])
 
   // Motion values for 3D tilt & spotlight
   const mouseX = useMotionValue(0)
@@ -45,6 +59,7 @@ const VideoFrame = ({ videoUrl, projectName, accentColor }: VideoFrameProps) => 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          setIsInView(entry.isIntersecting)
           if (entry.isIntersecting) {
             videoRef.current?.play().catch(() => { })
           } else {
@@ -192,27 +207,51 @@ const VideoFrame = ({ videoUrl, projectName, accentColor }: VideoFrameProps) => 
               }}
             />
 
-            <motion.video
-              variants={{
-                hover: { scale: 1.03, transition: { duration: 0.5, ease: 'easeOut' } }
-              }}
-              ref={videoRef}
-              muted
-              loop
-              playsInline
-              preload="none"
-              onLoadedData={() => setIsLoaded(true)}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                display: 'block',
-                opacity: isLoaded ? 1 : 0,
-                transition: 'opacity 0.5s ease',
-              }}
-            >
-              <source src={videoUrl} type="video/mp4" />
-            </motion.video>
+            {images && images.length > 0 ? (
+              <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                {images.map((img, idx) => (
+                  <motion.img
+                    key={img}
+                    src={img}
+                    alt={`${projectName} screenshot ${idx}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: idx === currentImageIndex ? 1 : 0 }}
+                    transition={{ duration: 0.4 }}
+                    onLoad={() => idx === 0 && setIsLoaded(true)}
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      display: 'block',
+                    }}
+                  />
+                ))}
+              </div>
+            ) : (
+              <motion.video
+                variants={{
+                  hover: { scale: 1.03, transition: { duration: 0.5, ease: 'easeOut' } }
+                }}
+                ref={videoRef}
+                muted
+                loop
+                playsInline
+                preload="none"
+                onLoadedData={() => setIsLoaded(true)}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block',
+                  opacity: isLoaded ? 1 : 0,
+                  transition: 'opacity 0.5s ease',
+                }}
+              >
+                <source src={videoUrl} type="video/mp4" />
+              </motion.video>
+            )}
 
             {/* Fallback — shows while video loads */}
             {!isLoaded && (

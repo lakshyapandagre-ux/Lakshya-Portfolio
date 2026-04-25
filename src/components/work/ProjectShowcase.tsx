@@ -40,7 +40,7 @@ const ProjectShowcase = () => {
             textTransform: 'uppercase',
           }}
         >
-          // 02 projects · more coming soon
+          // 03 projects · more coming soon
         </span>
       </motion.div>
 

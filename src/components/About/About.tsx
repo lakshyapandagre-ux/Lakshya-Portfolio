@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState, memo } from 'react';
 import './About.css';
+import FloatingImageTrail from '../Hero/FloatingImageTrail';
+import { useSpotify } from '../../context/SpotifyContext';
 
 // --- TYPES ---
 interface SpotifyTrack {
@@ -56,6 +58,9 @@ const SOCIALS: SocialLink[] = [
 const LAST_PLAYED: SpotifyTrack = {
   song: "Tum Prem Ho",
   artist: "Mohit Lalwani",
+  coverUrl: "/tum-prem-ho-cover.jpg.png",
+  songUrl: "https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT",
+  isPlaying: false,
   progress: 65,
   elapsed: "2:24",
   duration: "3:42"
@@ -79,126 +84,113 @@ const useInView = (ref: React.RefObject<HTMLElement | null>, threshold = 0.2) =>
   return inView;
 };
 
-// --- COMPONENTS ---
-const SpotifyWidget = memo(({ track }: { track: SpotifyTrack }) => (
-  // Removed internal container background styling classes per request, pure widget elements.
-  <div
-    className="about__spotify-container anim-phase-6"
-    style={{
-      marginTop: '4px',
-      gap: 0,
-      maxWidth: '100%',
-      width: '100%',
-      boxSizing: 'border-box',
-    }}
-  >
-    <div className="about__spotify-top" style={{ gap: '7px', marginBottom: '14px' }}>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="#1ED760" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 01-.853.206c-2.336-1.426-5.275-1.748-8.733-.956a.625.625 0 11-.274-1.218c3.782-.866 7.02-.486 9.654 1.115a.623.623 0 01.206.853zm1.192-3.21c-.194.316-.607.417-.923.223-2.666-1.637-6.732-2.1-9.74-.15a.705.705 0 01-.96-.285.705.705 0 01.285-.96c3.55-2.26 8.04-1.737 11.116 1.147.316.195.417.608.222.923zm.116-3.354C14.67 7.965 8.51 7.765 4.965 8.84a.89.89 0 01-1.142-.58.892.892 0 01.58-1.142C8.528 5.865 15.352 6.096 18.98 8.24c.343.203.456.646.253.989a.893.893 0 01-.99.253z" />
-      </svg>
-      <span className="about__spotify-label">{track.isPlaying ? "Listening Now \uD83C\uDFA7" : "Last played"}</span>
-    </div>
+// --- HELPERS ---
+const formatTime = (seconds: number) => {
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${s.toString().padStart(2, '0')}`;
+};
 
-    <div className="about__spotify-bottom" style={{ gap: '14px', justifyContent: 'flex-start', width: '100%' }}>
-      <div className="about__spotify-content" style={{ gap: '14px' }}>
-        <div
-          className="about__spotify-art"
-          style={{
-            width: '56px',
-            height: '56px',
-            borderRadius: '10px',
-            background: track.coverUrl 
-              ? `url(${track.coverUrl}) center/cover no-repeat`
-              : 'linear-gradient(135deg, #1a472a, #1ED760)',
-            flexShrink: 0,
-            boxShadow: 'none',
-          }}
-        />
-        <div className="about__spotify-info">
-          <div
-            className="about__spotify-song"
-            style={{
-              fontFamily: 'DM Sans',
-              fontWeight: 500,
-              fontSize: '15px',
-              color: '#F0F0F5',
-              margin: 0,
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          >
-            {track.song}
-          </div>
-          <div
-            className="about__spotify-artist"
-            style={{
-              fontFamily: 'DM Sans',
-              fontWeight: 400,
-              fontSize: '13px',
-              color: '#1ED760',
-              margin: '2px 0 10px 0',
-            }}
-          >
-            by {track.artist}
-          </div>
-          {(track.progress !== undefined || track.elapsed !== undefined) && (
-            <div className="about__spotify-progress-wrapper">
-              <div className="about__spotify-progress-bg">
-                <div className="about__spotify-progress-fill" style={{ width: `${track.progress || 0}%` }} />
-              </div>
-              <div className="about__spotify-times" style={{ marginTop: '5px' }}>
-                <span>{track.elapsed}</span>
-                <span>/</span>
-                <span>{track.duration}</span>
-              </div>
-            </div>
-          )}
-        </div>
+const SpotifyWidget = () => {
+  const { isPlaying, progress, elapsed, totalDuration, togglePlay, seek, track } = useSpotify();
+
+  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const pct = clickX / rect.width;
+    seek(pct);
+  };
+
+  return (
+    <div
+      className="about__spotify-container anim-phase-6"
+      style={{
+        marginTop: '4px',
+        gap: 0,
+        maxWidth: '100%',
+        width: '100%',
+        boxSizing: 'border-box',
+      }}
+    >
+
+      <div className="about__spotify-top" style={{ gap: '7px', marginBottom: '14px' }}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#1ED760" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 01-.853.206c-2.336-1.426-5.275-1.748-8.733-.956a.625.625 0 11-.274-1.218c3.782-.866 7.02-.486 9.654 1.115a.623.623 0 01.206.853zm1.192-3.21c-.194.316-.607.417-.923.223-2.666-1.637-6.732-2.1-9.74-.15a.705.705 0 01-.96-.285.705.705 0 01.285-.96c3.55-2.26 8.04-1.737 11.116 1.147.316.195.417.608.222.923zm.116-3.354C14.67 7.965 8.51 7.765 4.965 8.84a.89.89 0 01-1.142-.58.892.892 0 01.58-1.142C8.528 5.865 15.352 6.096 18.98 8.24c.343.203.456.646.253.989a.893.893 0 01-.99.253z" />
+        </svg>
+        <span className="about__spotify-label">{isPlaying ? "Listening Now 🎧" : "Last played"}</span>
       </div>
 
-      {track.songUrl ? (
-        <a href={track.songUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'flex' }}>
-          <button
-            className="about__spotify-play"
+      <div className="about__spotify-bottom" style={{ gap: '14px', justifyContent: 'flex-start', width: '100%' }}>
+        <div className="about__spotify-content" style={{ gap: '14px' }}>
+          <div
+            className={`about__spotify-art${isPlaying ? ' spinning' : ''}`}
             style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '50%',
-              background: 'rgba(255,255,255,0.08)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              color: '#F0F0F5',
-              cursor: 'pointer',
+              width: '56px',
+              height: '56px',
+              borderRadius: '10px',
+              background: track.coverUrl 
+                ? `url(${track.coverUrl}) center/cover no-repeat`
+                : 'linear-gradient(135deg, #1a472a, #1ED760)',
               flexShrink: 0,
-              transition: 'all 0.2s ease',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              boxShadow: isPlaying ? '0 0 20px rgba(30, 215, 96, 0.3)' : 'none',
+              transition: 'box-shadow 0.3s ease',
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#1ED760';
-              e.currentTarget.style.color = '#000';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
-              e.currentTarget.style.color = '#F0F0F5';
-            }}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </button>
-        </a>
-      ) : (
+          />
+          <div className="about__spotify-info">
+            <div
+              className="about__spotify-song"
+              style={{
+                fontFamily: 'DM Sans',
+                fontWeight: 500,
+                fontSize: '15px',
+                color: '#F0F0F5',
+                margin: 0,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {track.song}
+            </div>
+            <div
+              className="about__spotify-artist"
+              style={{
+                fontFamily: 'DM Sans',
+                fontWeight: 400,
+                fontSize: '13px',
+                color: '#1ED760',
+                margin: '2px 0 10px 0',
+              }}
+            >
+              by {track.artist}
+            </div>
+            <div className="about__spotify-progress-wrapper">
+              <div
+                className="about__spotify-progress-bg"
+                style={{ cursor: 'pointer' }}
+                onClick={handleProgressClick}
+              >
+                <div className="about__spotify-progress-fill" style={{ width: `${progress}%` }} />
+              </div>
+              <div className="about__spotify-times" style={{ marginTop: '5px' }}>
+                <span>{elapsed}</span>
+                <span>/</span>
+                <span>{totalDuration}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <button
           className="about__spotify-play"
+          onClick={togglePlay}
           style={{
             width: '40px',
             height: '40px',
             borderRadius: '50%',
-            background: 'rgba(255,255,255,0.08)',
-            border: '1px solid rgba(255,255,255,0.1)',
-            color: '#F0F0F5',
+            background: isPlaying ? '#1ED760' : 'rgba(255,255,255,0.08)',
+            border: `1px solid ${isPlaying ? '#1ED760' : 'rgba(255,255,255,0.1)'}`,
+            color: isPlaying ? '#000' : '#F0F0F5',
             cursor: 'pointer',
             flexShrink: 0,
             transition: 'all 0.2s ease',
@@ -211,18 +203,27 @@ const SpotifyWidget = memo(({ track }: { track: SpotifyTrack }) => (
             e.currentTarget.style.color = '#000';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
-            e.currentTarget.style.color = '#F0F0F5';
+            if (!isPlaying) {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
+              e.currentTarget.style.color = '#F0F0F5';
+            }
           }}
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 5v14l11-7z" />
-          </svg>
+          {isPlaying ? (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="4" width="4" height="16" />
+              <rect x="14" y="4" width="4" height="16" />
+            </svg>
+          ) : (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          )}
         </button>
-      )}
+      </div>
     </div>
-  </div>
-));
+  );
+};
 
 const PFPPanel = memo(() => (
   <div className="about__pfp-panel anim-pfp-reveal">
@@ -280,27 +281,20 @@ const PFPPanel = memo(() => (
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const inView = useInView(sectionRef, 0.2);
-  const [spotifyData, setSpotifyData] = useState<SpotifyTrack>(LAST_PLAYED);
-
-  useEffect(() => {
-    fetch('/api/spotify')
-      .then(res => res.json())
-      .then(data => {
-        if (data.title) {
-          setSpotifyData({
-            song: data.title,
-            artist: data.artist,
-            coverUrl: data.albumImage,
-            songUrl: data.songUrl,
-            isPlaying: data.isPlaying,
-          });
-        }
-      })
-      .catch(err => console.error("Failed to fetch spotify data:", err));
-  }, []);
+  const spotifyData = LAST_PLAYED;
 
   return (
     <section className={`about__section ${inView ? 'in-view' : ''}`} ref={sectionRef}>
+      <FloatingImageTrail 
+        images={[
+          '/hover-images/hover11.jpg', 
+          '/hover-images/hover13.jpg', 
+          '/hover-images/hover3.jpg', 
+          '/hover-images/hover5.jpg', 
+          '/hover-images/hover2.jpg'
+        ]}
+        minDistance={120}
+      />
 
       {/* Static Visual Geometric Layout Fillers */}
       <svg className="about__bg-shape about__bg-shape-triangle anim-phase-1" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -406,7 +400,7 @@ export default function AboutSection() {
           <div className="about__separator sep-bot anim-phase-5" />
 
           {/* Spotify Base floats naked */}
-          <SpotifyWidget track={spotifyData} />
+          <SpotifyWidget />
 
         </div>
       </div>

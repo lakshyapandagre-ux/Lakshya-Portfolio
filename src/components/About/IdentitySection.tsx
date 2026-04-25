@@ -124,7 +124,6 @@ const styles = `
     min-width: 0;
     flex: 1;
     height: 72px;
-    overflow: hidden;
   }
 
   .id-word {

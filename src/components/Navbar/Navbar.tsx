@@ -209,13 +209,9 @@ export default function Navbar({ theme: _theme, onToggleTheme: _onToggleTheme }:
         ref={navRef as React.RefObject<HTMLElement>}
         animate={{
           height: scrolled ? 46 : 52,
-          background: scrolled
-            ? 'rgba(10,10,15,0.55)'
-            : 'rgba(10,10,15,0.25)',
-          boxShadow: scrolled
-            ? '0 1px 0 rgba(255,255,255,0.05), 0 12px 40px rgba(0,0,0,0.18)'
-            : '0 1px 0 rgba(255,255,255,0)',
-          backdropFilter: scrolled ? 'blur(48px) saturate(160%)' : 'blur(24px) saturate(130%)',
+          background: 'transparent',
+          boxShadow: 'none',
+          backdropFilter: 'none',
         }}
         transition={{ duration: 0.3, ease: EASE }}
         style={{
@@ -225,7 +221,7 @@ export default function Navbar({ theme: _theme, onToggleTheme: _onToggleTheme }:
           right: 0,
           zIndex: 1000,
           // Webkit blur fallback in style (typed separately)
-          WebkitBackdropFilter: scrolled ? 'blur(48px) saturate(160%)' : 'blur(24px) saturate(130%)',
+          WebkitBackdropFilter: 'none',
           // Subtle gradient strip behind navbar (background strip)
           // outer gradient via ::before isn't possible with inline — done with pseudo child below
         }}
@@ -247,13 +243,6 @@ export default function Navbar({ theme: _theme, onToggleTheme: _onToggleTheme }:
           }}
         />
 
-        {/* Ambient glow band above + behind navbar */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(180deg, rgba(0,40,120,0.08) 0%, transparent 100%)',
-          pointerEvents: 'none',
-        }} />
 
         {/* ── Inner container — max-width + padding ──────────────────────── */}
         <div style={{
@@ -586,8 +575,8 @@ export default function Navbar({ theme: _theme, onToggleTheme: _onToggleTheme }:
                       left: 16,
                       right: 16,
                       background: 'rgba(8,8,14,0.92)',
-                      backdropFilter: 'blur(48px)',
-                      WebkitBackdropFilter: 'blur(48px)',
+                      backdropFilter: 'none',
+                      WebkitBackdropFilter: 'none',
                       border: '0.5px solid rgba(255,255,255,0.08)',
                       borderRadius: 14,
                       padding: '6px',

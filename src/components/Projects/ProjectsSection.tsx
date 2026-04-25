@@ -28,6 +28,8 @@ const PROJECTS: Project[] = [
     isPlaceholder: false,
     featured: true,
     status: 'deployed',
+    imageUrl: '/edu-connect.jpg.png',
+    imageUrl2: '/edu-connect2.jpg.png',
     preview: {
       type: 'browser-mockup',
       bgColor: '#0a1628',
@@ -54,6 +56,8 @@ const PROJECTS: Project[] = [
     isPlaceholder: false,
     featured: false,
     status: 'deployed',
+    imageUrl: '/res-q1.jpg.png',
+    imageUrl2: '/res-q2.jpg.png',
     preview: {
       type: 'browser-mockup',
       bgColor: '#1a0505',
@@ -76,12 +80,13 @@ const PROJECTS: Project[] = [
     ],
     tags: ['React', 'TypeScript', 'Python', 'FastAPI'],
     codeUrl: 'https://github.com/lakshyapandagre-ux/AudioSnap-.git',
-    liveUrl: null,
+    liveUrl: 'https://audio-snap-muoe.vercel.app/',
     gradientBg: 'linear-gradient(135deg, #0A0A1A 0%, #1A0A2E 100%)',
     isPlaceholder: false,
     featured: false,
     accentColor: '#7C3AED',
-    status: 'building',
+    status: 'deployed',
+    imageUrl: '/audio-snap.jpg.png',
     preview: {
       type: 'waveform',
       bgColor: '#0A0A1A',

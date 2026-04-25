@@ -6,21 +6,28 @@ type Skill = { name: string; color: string; iconUrl: string };
 const iconBase = 'https://cdn.simpleicons.org';
 const SKILLS: Skill[] = [
   { name: 'React', color: '#61DAFB', iconUrl: `${iconBase}/react/61DAFB` },
-  { name: 'Next.js', color: '#FFFFFF', iconUrl: `${iconBase}/nextdotjs/FFFFFF` },
-  { name: 'TypeScript', color: '#3178C6', iconUrl: `${iconBase}/typescript/3178C6` },
   { name: 'JavaScript', color: '#F7DF1E', iconUrl: `${iconBase}/javascript/F7DF1E` },
   { name: 'Tailwind CSS', color: '#06B6D4', iconUrl: `${iconBase}/tailwindcss/06B6D4` },
-  { name: 'Framer Motion', color: '#0055FF', iconUrl: `${iconBase}/framer/FFFFFF` },
-  { name: 'Node.js', color: '#339933', iconUrl: `${iconBase}/nodedotjs/339933` },
+  { name: 'Bootstrap', color: '#7952B3', iconUrl: `${iconBase}/bootstrap/7952B3` },
+  { name: 'HTML5', color: '#E34F26', iconUrl: `${iconBase}/html5/E34F26` },
+  { name: 'CSS3', color: '#1572B6', iconUrl: `${iconBase}/css3/1572B6` },
   { name: 'Python', color: '#3776AB', iconUrl: `${iconBase}/python/3776AB` },
-  { name: 'C++', color: '#00599C', iconUrl: `${iconBase}/cplusplus/00599C` },
-  { name: 'PostgreSQL', color: '#4169E1', iconUrl: `${iconBase}/postgresql/4169E1` },
-  { name: 'MongoDB', color: '#47A248', iconUrl: `${iconBase}/mongodb/47A248` },
+  { name: 'FastAPI', color: '#009688', iconUrl: `${iconBase}/fastapi/009688` },
+  { name: 'Flask', color: '#FFFFFF', iconUrl: `${iconBase}/flask/FFFFFF` },
   { name: 'Supabase', color: '#3ECF8E', iconUrl: `${iconBase}/supabase/3ECF8E` },
-  { name: 'Docker', color: '#2496ED', iconUrl: `${iconBase}/docker/2496ED` },
+  { name: 'Firebase', color: '#FFCA28', iconUrl: `${iconBase}/firebase/FFCA28` },
+  { name: 'MySQL', color: '#4479A1', iconUrl: `${iconBase}/mysql/4479A1` },
+  { name: 'C', color: '#A8B9CC', iconUrl: `${iconBase}/c/A8B9CC` },
+  { name: 'C++', color: '#00599C', iconUrl: `${iconBase}/cplusplus/00599C` },
   { name: 'Git', color: '#F05032', iconUrl: `${iconBase}/git/F05032` },
+  { name: 'GitHub', color: '#FFFFFF', iconUrl: `${iconBase}/github/FFFFFF` },
+  { name: 'VS Code', color: '#007ACC', iconUrl: `${iconBase}/visualstudiocode/007ACC` },
+  { name: 'Cursor', color: '#FFFFFF', iconUrl: `${iconBase}/cursor/FFFFFF` },
+  { name: 'Postman', color: '#FF6C37', iconUrl: `${iconBase}/postman/FF6C37` },
   { name: 'Figma', color: '#F24E1E', iconUrl: `${iconBase}/figma/F24E1E` },
-  { name: 'Vercel', color: '#000000', iconUrl: `${iconBase}/vercel/FFFFFF` },
+  { name: 'ChatGPT', color: '#74AA9C', iconUrl: `${iconBase}/openai/74AA9C` },
+  { name: 'Claude', color: '#CC785C', iconUrl: `${iconBase}/anthropic/CC785C` },
+  { name: 'Antigravity', color: '#0066FF', iconUrl: `${iconBase}/google-deepmind/0066FF` },
 ];
 
 const PHILOSOPHY_BLOCKS = [
@@ -388,7 +395,7 @@ export default function CinematicJourney() {
               fontFamily: "'Playfair Display', Georgia, serif",
               fontStyle: 'italic',
               fontSize: 'clamp(24px, 4vw, 50px)',
-              background: 'linear-gradient(90deg, #F0F0F5, #8888A0)',
+              background: 'linear-gradient(90deg, #60a5fa, #c084fc, #f472b6)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               margin: 0
@@ -593,9 +600,6 @@ function StoryBlock({ block, isMobile }: any) {
         >
           {/* Subtle Background Elements with Parallax Depth */}
           <motion.div style={{ position: 'absolute', inset: 0, y: bgY, zIndex: 0, opacity: 0.08, pointerEvents: 'none' }}>
-            {block.visual === 'grid' && (
-              <div style={{ width: '100%', height: '150%', backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)', backgroundSize: '40px 40px', maskImage: 'linear-gradient(to bottom, black 10%, transparent 90%)' }} />
-            )}
             {block.visual === 'pulse' && (
               <motion.div animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }} style={{ position: 'absolute', top: '20%', right: '10%', width: '200px', height: '200px', background: 'radial-gradient(circle, #FFFFFF 0%, transparent 70%)', filter: 'blur(40px)' }} />
             )}

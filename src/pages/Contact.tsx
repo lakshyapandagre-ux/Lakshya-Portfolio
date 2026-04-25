@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useGSAPScrollReveal } from '../hooks/useGSAPScrollReveal';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -163,6 +164,7 @@ export default function Contact() {
   const [message, setMessage] = useState('');
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [newSignature, setNewSignature] = useState<SignatureEntry | null>(null);
+
 
 
   /* ── GSAP stagger refs ── */
@@ -340,13 +342,15 @@ export default function Contact() {
           <div className="ct-hero-right ct-hero-anim">
             <div className="ct-profile-card">
               <div className="ct-profile-avatar">
-                <span>L</span>
+                <img src="/hover-images/hover13.jpg" alt="Lakshya Pandagre" className="ct-profile-avatar-img" />
               </div>
-              <h3 className="ct-profile-name">Lakshya Pandagre</h3>
-              <p className="ct-profile-role">Full Stack Dev · ML Explorer</p>
-              <div className="ct-profile-badge">
-                <span className="ct-badge-dot" />
-                Available for work
+              <div className="ct-profile-content-overlay">
+                <h3 className="ct-profile-name">Lakshya Pandagre</h3>
+                <p className="ct-profile-role">Full Stack Dev · ML Explorer</p>
+                <div className="ct-profile-badge">
+                  <span className="ct-badge-dot" />
+                  Available for work
+                </div>
               </div>
             </div>
           </div>

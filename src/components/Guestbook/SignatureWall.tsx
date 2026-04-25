@@ -21,18 +21,18 @@ export default function SignatureWall({ newEntry }: SignatureWallProps) {
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot<DocumentData> | null>(null);
-  
+
   const wallHeaderRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     if (!wallHeaderRef.current) return;
-    
+
     gsap.fromTo(
       wallHeaderRef.current.children,
-      { 
-        y: 40, 
-        opacity: 0, 
-        filter: 'blur(10px)' 
+      {
+        y: 40,
+        opacity: 0,
+        filter: 'blur(10px)'
       },
       {
         y: 0,

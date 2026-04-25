@@ -43,7 +43,7 @@ const ProjectInfo = ({ project }: ProjectInfoProps) => {
           marginBottom: '12px',
         }}
       >
-        {project.number} / 02
+        {project.number} / 03
       </span>
 
       {/* Project name */}

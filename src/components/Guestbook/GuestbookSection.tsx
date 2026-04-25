@@ -212,7 +212,7 @@ export default function GuestbookSection({ onNewSignature }: GuestbookSectionPro
       handleClear();
       setMessage('');
       setShowSuccess(true);
-      
+
       setTimeout(() => {
         setShowSuccess(false);
         setTimeout(animateState, 50);
@@ -233,7 +233,7 @@ export default function GuestbookSection({ onNewSignature }: GuestbookSectionPro
           console.error('Background save failed:', err);
         });
       });
-      
+
     } catch (err) {
       console.error('Failed to process signature:', err);
       setErrorMsg('// something went wrong. try again.');

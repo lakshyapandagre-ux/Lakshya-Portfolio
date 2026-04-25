@@ -22,4 +22,6 @@ export interface Project {
   isPlaceholder?: boolean;
   accentColor?: string;
   status?: 'deployed' | 'building';
+  imageUrl?: string;
+  imageUrl2?: string;
 }

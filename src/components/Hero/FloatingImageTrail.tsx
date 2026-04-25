@@ -2,19 +2,31 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import './FloatingImageTrail.css';
 
-const IMAGES = [
+const DEFAULT_IMAGES = [
   '/hover-images/hover1.jpg',
   '/hover-images/hover2.jpg',
   '/hover-images/hover3.jpg',
   '/hover-images/hover4.jpg',
-  // '/hover-images/hover5.jpg',
+  '/hover-images/hover5.jpg',
   '/hover-images/hover6.jpg',
   '/hover-images/hover7.jpg',
   '/hover-images/hover8.jpg',
   '/hover-images/hover9.jpg',
   '/hover-images/hover10.jpg',
+  '/hover-images/hover11.jpg',
+  '/hover-images/hover12.jpg',
+  '/hover-images/hover13.jpg',
 ];
-export default function FloatingImageTrail() {
+
+interface FloatingImageTrailProps {
+  images?: string[];
+  minDistance?: number;
+}
+
+export default function FloatingImageTrail({ 
+  images = DEFAULT_IMAGES, 
+  minDistance: propMinDistance 
+}: FloatingImageTrailProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -22,12 +34,24 @@ export default function FloatingImageTrail() {
     let imageIndex = 0;
     let lastX = 0;
     let lastY = 0;
-    const minDistance = 60; // Spawn every 60px of movement
+    
+    // Use prop minDistance or default to 60
+    const minDistance = propMinDistance || 60; 
     const minTime = 80;     // At most every 80ms
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Only show trail when in Hero section (scrolled less than 1 viewport height)
-      if (window.scrollY > window.innerHeight) return;
+      // Check if mouse is over the container's parent section
+      if (!containerRef.current?.parentElement) return;
+      const rect = containerRef.current.parentElement.getBoundingClientRect();
+      
+      const isOverSection = (
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom
+      );
+
+      if (!isOverSection) return;
 
       const now = performance.now();
       const dx = e.clientX - lastX;
@@ -57,11 +81,12 @@ export default function FloatingImageTrail() {
       const imgWrapper = document.createElement('div');
       imgWrapper.className = 'floating-trail-card';
 
-      const img = document.createElement('img');
-      img.src = IMAGES[imageIndex];
-      imgWrapper.appendChild(img);
+      const imgPath = images[imageIndex];
+      imageIndex = (imageIndex + 1) % images.length;
 
-      imageIndex = (imageIndex + 1) % IMAGES.length;
+      const img = document.createElement('img');
+      img.src = imgPath;
+      imgWrapper.appendChild(img);
 
       containerRef.current.appendChild(imgWrapper);
 
@@ -123,7 +148,7 @@ export default function FloatingImageTrail() {
         containerRef.current.innerHTML = '';
       }
     };
-  }, []);
+  }, [images, propMinDistance]);
 
   return <div ref={containerRef} className="floating-trail-container" />;
 }

@@ -171,10 +171,10 @@ const useCountUp = (end: number, duration = 1500, inView: boolean) => {
 
 // --- SYNTAX HIGHLIGHTING ---
 const filenames = {
-  frontend:  'frontend.ts',
-  backend:   'backend.ts', 
+  frontend: 'frontend.ts',
+  backend: 'backend.ts',
   languages: 'languages.ts',
-  tools:     'tools.config.ts',
+  tools: 'tools.config.ts',
 } as const;
 
 const contentMap: Record<string, string> = {
@@ -185,30 +185,30 @@ const contentMap: Record<string, string> = {
 }
 
 const techDescriptions: Record<string, string> = {
-  'React':        'UI library',
-  'JavaScript':   'Core language',
+  'React': 'UI library',
+  'JavaScript': 'Core language',
   'Tailwind CSS': 'Utility CSS',
-  'Bootstrap':    'CSS framework',
-  'HTML5':        'Markup',
-  'CSS3':         'Styling',
-  'Python':       'Backend + ML',
-  'Supabase':     'BaaS platform',
-  'Firebase':     'BaaS platform',
-  'FastAPI':      'Python API',
-  'Flask':        'Web framework',
-  'MySQL':        'SQL database',
-  'SQL':          'Query language',
-  'Git':          'Version control',
-  'GitHub':       'Code hosting',
-  'VS Code':      'Code editor',
-  'Cursor':       'AI IDE',
-  'Postman':      'API testing',
-  'Figma':        'UI design',
-  'ChatGPT':      'AI assistant',
-  'Claude':       'AI assistant',
-  'Antigravity':  'AI Agentic Assistant',
-  'C':            'Systems lang',
-  'C++':          'Systems lang',
+  'Bootstrap': 'CSS framework',
+  'HTML5': 'Markup',
+  'CSS3': 'Styling',
+  'Python': 'Backend + ML',
+  'Supabase': 'BaaS platform',
+  'Firebase': 'BaaS platform',
+  'FastAPI': 'Python API',
+  'Flask': 'Web framework',
+  'MySQL': 'SQL database',
+  'SQL': 'Query language',
+  'Git': 'Version control',
+  'GitHub': 'Code hosting',
+  'VS Code': 'Code editor',
+  'Cursor': 'AI IDE',
+  'Postman': 'API testing',
+  'Figma': 'UI design',
+  'ChatGPT': 'AI assistant',
+  'Claude': 'AI assistant',
+  'Antigravity': 'AI Agentic Assistant',
+  'C': 'Systems lang',
+  'C++': 'Systems lang',
 }
 
 const proficiencyMap: Record<string, number> = {
@@ -330,8 +330,8 @@ const CategoryCard = memo(({ category, idx }: { category: TechCategory, idx: num
   const filename = filenames[category.id as keyof typeof filenames] || 'unknown.ts';
 
   return (
-    <div 
-      className="code-card gsap-reveal" 
+    <div
+      className="code-card gsap-reveal"
       style={{ display: 'flex', flexDirection: 'column' }}
       onMouseMove={handleMouseMove}
     >
@@ -346,7 +346,7 @@ const CategoryCard = memo(({ category, idx }: { category: TechCategory, idx: num
         <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FF5F57' }} />
         <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FEBC2E' }} />
         <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28C840' }} />
-        
+
         <span style={{
           fontFamily: "'JetBrains Mono', monospace",
           fontSize: '11px',
@@ -356,7 +356,7 @@ const CategoryCard = memo(({ category, idx }: { category: TechCategory, idx: num
         }}>
           {filename}
         </span>
-        
+
         <span style={{
           fontFamily: "'JetBrains Mono', monospace",
           fontSize: '10px',
@@ -467,7 +467,7 @@ const CategoryCard = memo(({ category, idx }: { category: TechCategory, idx: num
         }}>
           // proficiency
         </span>
-        {[1,2,3,4,5].map(dot => (
+        {[1, 2, 3, 4, 5].map(dot => (
           <div key={dot} style={{
             width: '6px',
             height: '6px',
@@ -629,7 +629,7 @@ export default function TechStackSection({ headingOverride, labelOverride, water
 
       {/* Part 2: Section Header (Moved Above Marquee) */}
       <div className="ts__inner" style={{ marginBottom: '32px' }}>
-        <div 
+        <div
           ref={headerRef}
           style={{
             display: 'inline-flex',
@@ -729,7 +729,7 @@ export default function TechStackSection({ headingOverride, labelOverride, water
         </div>
 
         {/* Part 3: Categorized Grid */}
-        <div 
+        <div
           ref={cardsRef}
           style={{
             display: 'grid',

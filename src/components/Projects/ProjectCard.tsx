@@ -79,7 +79,21 @@ const ProjectCard = memo(({ project, index: _index, totalProjects: _totalProject
               '--grid-color': project.preview.gridColor
             } as React.CSSProperties}
           >
-            {project.preview.type === 'waveform' ? (
+            {project.imageUrl ? (
+              <img
+                src={project.imageUrl}
+                alt={`${project.title} preview`}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'top center',
+                  display: 'block',
+                }}
+                loading="lazy"
+                decoding="async"
+              />
+            ) : project.preview.type === 'waveform' ? (
               <>
                 {/* Waveform icon top-right */}
                 <svg

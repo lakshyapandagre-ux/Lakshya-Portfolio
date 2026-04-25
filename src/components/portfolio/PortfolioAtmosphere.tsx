@@ -61,12 +61,11 @@ export default function PortfolioAtmosphere() {
         }}
       />
 
-      {/* Soft vignette */}
       <div
         className="absolute inset-0 opacity-[0.85]"
         style={{
           background:
-            'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(15, 17, 23, 0.4) 0%, transparent 55%), radial-gradient(ellipse 70% 50% at 100% 100%, rgba(10, 10, 15, 0.35) 0%, transparent 50%)',
+            'radial-gradient(ellipse 70% 50% at 100% 100%, rgba(10, 10, 15, 0.35) 0%, transparent 50%)',
         }}
       />
 

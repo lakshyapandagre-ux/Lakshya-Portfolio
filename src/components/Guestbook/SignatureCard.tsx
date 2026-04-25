@@ -31,10 +31,10 @@ export default function SignatureCard({ entry, index }: SignatureCardProps) {
       }}
     >
       <div className="sig-canvas-area">
-        <img 
-          src={entry.signature} 
-          alt={`${entry.name}'s signature`} 
-          className="sig-image" 
+        <img
+          src={entry.signature}
+          alt={`${entry.name}'s signature`}
+          className="sig-image"
         />
       </div>
 

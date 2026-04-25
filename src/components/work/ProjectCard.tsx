@@ -65,6 +65,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
           ) : (
             <VideoFrame
               videoUrl={project.videoUrl}
+              images={project.images}
               projectName={project.name}
               accentColor={project.accentColor}
             />
@@ -81,6 +82,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
           {isEven ? (
             <VideoFrame
               videoUrl={project.videoUrl}
+              images={project.images}
               projectName={project.name}
               accentColor={project.accentColor}
             />

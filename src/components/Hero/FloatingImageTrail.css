@@ -5,7 +5,8 @@
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 5; /* Slightly behind extreme top layer, but visible over backgrounds and grids */
+  z-index: 5;
+  /* Slightly behind extreme top layer, but visible over backgrounds and grids */
   overflow: hidden;
 }
 

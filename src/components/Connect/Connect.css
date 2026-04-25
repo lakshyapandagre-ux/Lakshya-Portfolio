@@ -96,6 +96,7 @@
   .nc-box-content {
     grid-template-columns: 1fr 1fr;
   }
+
   .nc-col-3 {
     grid-column: 1 / -1;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -107,10 +108,12 @@
   .nc-box-content {
     grid-template-columns: 1fr;
   }
+
   .nc-col-2 {
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     border-left: none !important;
   }
+
   .nc-box {
     margin: 0 20px;
   }
@@ -163,7 +166,8 @@
 .nc-comment {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
-  color: #52525b; /* subtle gray */
+  color: #52525b;
+  /* subtle gray */
 }
 
 /* ── Column 1: Social Links ── */
@@ -182,7 +186,8 @@
   border-radius: 12px;
   transition: all 0.2s ease;
   padding: 8px;
-  margin: -8px; /* Offset padding to align visual edge */
+  margin: -8px;
+  /* Offset padding to align visual edge */
 }
 
 .nc-social-card:hover {
@@ -315,9 +320,18 @@
   height: 10px;
   border-radius: 50%;
 }
-.mac-dot.red { background: #ef4444; }
-.mac-dot.yellow { background: #f59e0b; }
-.mac-dot.green { background: #22c55e; }
+
+.mac-dot.red {
+  background: #ef4444;
+}
+
+.mac-dot.yellow {
+  background: #f59e0b;
+}
+
+.mac-dot.green {
+  background: #22c55e;
+}
 
 .ide-tab {
   font-family: 'JetBrains Mono', monospace;

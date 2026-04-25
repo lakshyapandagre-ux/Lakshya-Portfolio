@@ -21,7 +21,7 @@ const EmailIcon = () => (
 );
 const TwitterIcon = () => (
   <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
   </svg>
 );
 const InstagramIcon = () => (
@@ -32,10 +32,10 @@ const InstagramIcon = () => (
   </svg>
 );
 const ArrowRightUp = () => (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M7 17L17 7" />
-        <path d="M7 7h10v10" />
-    </svg>
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M7 17L17 7" />
+    <path d="M7 7h10v10" />
+  </svg>
 );
 
 export default function ConnectSection() {
@@ -86,7 +86,7 @@ export default function ConnectSection() {
         </div>
 
         <h1 className="nc-heading">
-          Have an idea? Let's build <span className="nc-cursive">something great together.<br/></span>
+          Have an idea? Let's build <span className="nc-cursive">something great together.<br /></span>
         </h1>
         <p className="nc-subtitle">Whether it's a project, internship, freelance work, or just a chat — I'm always open to new opportunities.</p>
       </div>
@@ -94,7 +94,7 @@ export default function ConnectSection() {
       {/* ── 3 Column Box ── */}
       <div className="nc-box gsap-reveal">
         <div className="nc-box-content">
-          
+
           {/* COL 1: Get in Touch */}
           <div className="nc-col nc-col-1">
             <div className="nc-title-wrap">
@@ -167,7 +167,7 @@ export default function ConnectSection() {
               <span className="nc-bar" style={{ backgroundColor: '#22c55e' }}></span>
               <h3 className="nc-title">Quick Links</h3>
             </div>
-            
+
             <div className="nc-pill-grid">
               <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="nc-pill">Home</button>
               <button onClick={() => { document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); }} className="nc-pill">About</button>
@@ -187,55 +187,55 @@ export default function ConnectSection() {
 
           {/* COL 3: Send Message (IDE Style) */}
           <div className="nc-col nc-col-3">
-             <div className="nc-ide-bar">
-                <div className="mac-dots">
-                   <div className="mac-dot red"></div>
-                   <div className="mac-dot yellow"></div>
-                   <div className="mac-dot green"></div>
-                </div>
-                <div className="ide-tab">message.ts</div>
-                <div className="ide-status">• unsaved</div>
-             </div>
-             
-             <div className="nc-col-3-inner">
-                <div className="nc-title-wrap">
-                  <span className="nc-bar" style={{ backgroundColor: '#eab308' }}></span>
-                  <h3 className="nc-title">Send a Message</h3>
-                </div>
-                <p className="nc-desc">Prefer to write? I'll get back within 24 hours.</p>
+            <div className="nc-ide-bar">
+              <div className="mac-dots">
+                <div className="mac-dot red"></div>
+                <div className="mac-dot yellow"></div>
+                <div className="mac-dot green"></div>
+              </div>
+              <div className="ide-tab">message.ts</div>
+              <div className="ide-status">• unsaved</div>
+            </div>
 
-                <form className="nc-form" onSubmit={handleFormSubmit}>
-                  <div className="nc-form-row">
-                     <div className="nc-input-group">
-                        <label className="nc-comment">// name</label>
-                        <input className="nc-input" type="text" placeholder="Full Name" value={cfName} onChange={e => setCfName(e.target.value)} required />
-                     </div>
-                     <div className="nc-input-group">
-                        <label className="nc-comment">// email</label>
-                        <input className="nc-input" type="email" placeholder="your@email.com" value={cfEmail} onChange={e => setCfEmail(e.target.value)} required />
-                     </div>
-                  </div>
-                  <div className="nc-input-group" style={{ marginTop: '4px' }}>
-                     <label className="nc-comment">// message</label>
-                     <textarea className="nc-input" placeholder="What's on your mind? Tell me about your project, idea, or just say hi..." rows={3} value={cfMsg} onChange={e => setCfMsg(e.target.value)} required></textarea>
-                  </div>
-                  
-                  <button type="submit" className="nc-submit" disabled={cfStatus !== 'idle'}>
-                     {cfStatus === 'loading' ? 'Sending...' : cfStatus === 'success' ? 'Message Sent! ✓' : cfStatus === 'error' ? 'Failed to send ✕' : <><span>Send Message</span> <ArrowRightUp /></>}
-                  </button>
+            <div className="nc-col-3-inner">
+              <div className="nc-title-wrap">
+                <span className="nc-bar" style={{ backgroundColor: '#eab308' }}></span>
+                <h3 className="nc-title">Send a Message</h3>
+              </div>
+              <p className="nc-desc">Prefer to write? I'll get back within 24 hours.</p>
 
-                  <div className="nc-form-footer">
-                     <span className="nc-comment">// response within 24 hours · no spam, ever</span>
+              <form className="nc-form" onSubmit={handleFormSubmit}>
+                <div className="nc-form-row">
+                  <div className="nc-input-group">
+                    <label className="nc-comment">// name</label>
+                    <input className="nc-input" type="text" placeholder="Full Name" value={cfName} onChange={e => setCfName(e.target.value)} required />
                   </div>
-                </form>
-             </div>
+                  <div className="nc-input-group">
+                    <label className="nc-comment">// email</label>
+                    <input className="nc-input" type="email" placeholder="your@email.com" value={cfEmail} onChange={e => setCfEmail(e.target.value)} required />
+                  </div>
+                </div>
+                <div className="nc-input-group" style={{ marginTop: '4px' }}>
+                  <label className="nc-comment">// message</label>
+                  <textarea className="nc-input" placeholder="What's on your mind? Tell me about your project, idea, or just say hi..." rows={3} value={cfMsg} onChange={e => setCfMsg(e.target.value)} required></textarea>
+                </div>
+
+                <button type="submit" className="nc-submit" disabled={cfStatus !== 'idle'}>
+                  {cfStatus === 'loading' ? 'Sending...' : cfStatus === 'success' ? 'Message Sent! ✓' : cfStatus === 'error' ? 'Failed to send ✕' : <><span>Send Message</span> <ArrowRightUp /></>}
+                </button>
+
+                <div className="nc-form-footer">
+                  <span className="nc-comment">// response within 24 hours · no spam, ever</span>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
 
         {/* CONTAINER FOOTER */}
         <div className="nc-box-footer">
-           <span className="nc-comment">// lakshya.dev</span>
-           <span className="nc-comment">v1.0.0 · React + TypeScript</span>
+          <span className="nc-comment">// lakshya.dev</span>
+          <span className="nc-comment">v1.0.0 · React + TypeScript</span>
         </div>
       </div>
     </section>

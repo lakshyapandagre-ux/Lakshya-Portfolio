@@ -399,7 +399,19 @@ const PopupContent: React.FC<PopupContentProps> = ({ project, onClose, contentVi
             position: 'relative',
             overflow: 'hidden',
           }}>
-            {isBuilding ? (
+            {project.imageUrl ? (
+              <img
+                src={project.imageUrl}
+                alt={`${project.title} preview`}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'top center',
+                }}
+                loading="lazy"
+              />
+            ) : isBuilding ? (
               <WaveformPreview />
             ) : (
               <span style={{
@@ -420,7 +432,7 @@ const PopupContent: React.FC<PopupContentProps> = ({ project, onClose, contentVi
               width: '28px',
               height: '28px',
               borderRadius: '50%',
-              background: 'rgba(255,255,255,0.1)',
+              background: 'rgba(0,0,0,0.5)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -525,6 +537,20 @@ const PopupContent: React.FC<PopupContentProps> = ({ project, onClose, contentVi
               background: project.gradientBg,
               minHeight: '80px',
             }}>
+              {(project.imageUrl2 || project.imageUrl) && (
+                <img
+                  src={project.imageUrl2 || project.imageUrl}
+                  alt={`${project.title} secondary`}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'top center',
+                    display: 'block',
+                  }}
+                  loading="lazy"
+                />
+              )}
               <div style={{
                 position: 'absolute', bottom: 0, left: 0, right: 0,
                 padding: '4px 8px',
@@ -533,7 +559,7 @@ const PopupContent: React.FC<PopupContentProps> = ({ project, onClose, contentVi
                 <span style={{
                   fontFamily: 'JetBrains Mono, monospace', fontSize: '8px',
                   color: 'rgba(255,255,255,0.4)',
-                }}>Mobile view</span>
+                }}>Screenshot 2</span>
               </div>
               <div style={{
                 position: 'absolute', bottom: '22px', right: '8px',
