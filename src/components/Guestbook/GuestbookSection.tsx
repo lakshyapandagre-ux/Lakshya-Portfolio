@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { signInWithPopup, onAuthStateChanged, signOut, type User } from 'firebase/auth';
-import { collection, addDoc } from 'firebase/firestore';
+
 import { auth, googleProvider, db } from '../../lib/firebase';
 import type { SignatureEntry } from './SignatureCard';
 import './GuestbookSection.css';

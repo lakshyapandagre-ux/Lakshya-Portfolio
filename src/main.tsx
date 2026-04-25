@@ -1,4 +1,5 @@
-import { StrictMode, Component, ErrorInfo, ReactNode } from 'react';
+import { StrictMode, Component } from 'react';
+import type { ErrorInfo, ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';

@@ -5,6 +5,7 @@ import './GuestbookSection.css'; // or you can import from a new css file if pre
 export interface SignatureEntry {
   id: string;
   name: string;
+  email: string;
   avatar_url?: string;
   signature: string; // image data URL
   message?: string | null;
