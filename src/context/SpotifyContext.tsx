@@ -88,7 +88,7 @@ export const SpotifyProvider = ({ children }: { children: ReactNode }) => {
     if (isPlaying) {
       audio.pause();
     } else {
-      audio.play().catch(err => console.log("Playback failed:", err));
+      audio.play().catch(err => console.warn("Playback failed:", err));
     }
     setIsPlaying(!isPlaying);
   };
